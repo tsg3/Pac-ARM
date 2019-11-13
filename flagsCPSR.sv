@@ -1,13 +1,13 @@
-module flagsCPSR (input logic [3:0] inputs,
+module flagsCPSR (input logic zeroIn,
 						input logic clk,
-						output logic [3:0] outputs);
+						output logic zeroOut);
 
-	logic [3:0] flags = 4'd0;
+	logic zero = 1'b0;
 	
-	assign outputs = flags;
+	assign zeroOut = zero;
 	
 	always_ff @(negedge clk) begin
-		flags <= inputs;
+		zero <= zeroIn;
 	end
 
 endmodule
