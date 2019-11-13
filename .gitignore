@@ -41,19 +41,19 @@
 /*
 !/*.gitignore
 ##
-!*.qpf
-!*.qsf
-!*.qws
-!*.bdf
-!*.vhd
+*.qpf
+*.qsf
+*.qws
+*.bdf
+*.vhd
 !*.v
-!*.ptf
-!*.bsf
-!**/class.ptf
-!*.tbd
-!*.sof
+*.ptf
+*.bsf
+**/class.ptf
+*.tbd
+*.sof
 ## tbd
 
-!*.tcl
+*.tcl
 
 # End of https://www.gitignore.io/api/alteraquartusii
