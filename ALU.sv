@@ -4,7 +4,7 @@ module ALU(input logic [31:0] datoA,
 			  output logic [31:0] salida,
 			  output logic carryOut,
 			  output logic overflow,
-			  output logic zero)
+			  output logic zero);
 
 	//Suma
 	logic [31:0] resSuma;
