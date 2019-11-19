@@ -4,12 +4,15 @@ module unidadControl	(input logic [5:0] opcodes,
 							 input logic zero,
 							 output logic selPC,
 							 output logic regWr,
+							 output logic selAddA, 
+							 output logic selAddB, 
 							 output logic selAddWr, 
 							 output logic [3:0] opALU,
 							 output logic cin,
 							 output logic [1:0] selDiWr,
 							 output logic selOperaB,
-							 output logic memWr);
+							 output logic memWr, 
+							 output logic logicalOperation);
 
 	always_comb begin
 		case(operation)
@@ -19,6 +22,8 @@ module unidadControl	(input logic [5:0] opcodes,
 							regWr = 1'b1;
 						else
 							regWr = 1'b0;
+						selAddA = 1'b0;
+						selAddB = 1'b0;
 						selAddWr = 1'b0;
 						opALU = opcodes[4:1];
 						if(opcodes[4:1] == 4'b0010)
@@ -34,6 +39,10 @@ module unidadControl	(input logic [5:0] opcodes,
 						else
 							selOperaB = 1'b0;
 						memWr = 1'b1;
+						if(opcodes[4:1] == 4'b0000)
+							logicalOperation = 1'b1;
+						else
+							logicalOperation = 1'b0;
 					 end
 			2'b01: begin
 						selPC = 1'b0;
@@ -45,6 +54,8 @@ module unidadControl	(input logic [5:0] opcodes,
 							regWr = 1'b0;
 							memWr = 1'b0;
 						end
+						selAddA = 1'b1;
+						selAddB = 1'b1;
 						selAddWr = 1'b0;
 						if(opcodes[3] == 1'b1)
 							opALU = 4'b0100;
@@ -56,6 +67,7 @@ module unidadControl	(input logic [5:0] opcodes,
 							selOperaB = 1'b1;
 						else
 							selOperaB = 1'b0;
+						logicalOperation = 1'b0;
 					 end
 			2'b10: begin
 						if((condicion == 4'b0001 && ~zero) || (condicion == 4'b0000 && zero))
@@ -66,22 +78,28 @@ module unidadControl	(input logic [5:0] opcodes,
 							regWr = 1'b1;
 						else
 							regWr = 1'b0;
+						selAddA = 1'b0;
+						selAddB = 1'b0;
 						selAddWr = 1'b1;
 						opALU = 4'b0000;
 						cin = 1'b0;
 						selDiWr = 2'b11;
 						selOperaB = 1'b0;
 						memWr = 1'b1;
+						logicalOperation = 1'b0;
 					 end
 			default: begin
 						selPC = 1'b0; 
 						regWr = 1'b1;
+						selAddA = 1'b0;
+						selAddB = 1'b0;
 						selAddWr = 1'b0;
 						opALU = 4'b0000;
 						cin = 1'b0;
 						selDiWr = 2'b00;
 						selOperaB = 1'b0;
 						memWr = 1'b1;
+						logicalOperation = 1'b1;
 					 end
 		endcase
 	end

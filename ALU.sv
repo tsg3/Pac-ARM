@@ -26,7 +26,7 @@ module ALU(input logic [31:0] datoA,
 	and_gate and_gate1(datoA, datoB, resAnd);
 	
 	//MUX
-	logic [32:0] salidaMUX;
+	logic [31:0] salidaMUX;
 	assign salida = salidaMUX;
 	
 	multiplexor16 #(32) mux1(.datoA(resAnd),
