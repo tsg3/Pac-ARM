@@ -1,8 +1,8 @@
 module memoriaDatos #(parameter size = 32) (input logic clk,
-														   input logic memWr,
-														   input logic [31:0] address,
-														   input logic [31:0] datoIn,
-														   output logic [31:0] datoOut);
+														  input logic memWr,
+														  input logic [31:0] address,
+														  input logic [31:0] datoIn,
+														  output logic [31:0] datoOut);
 	
 	logic [7:0] memoria [0:size - 1];
 
