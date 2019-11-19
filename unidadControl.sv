@@ -23,7 +23,10 @@ module unidadControl	(input logic [5:0] opcodes,
 							regWr = 1'b0;
 						selAddB = 1'b0;
 						selAddWr = 1'b0;
-						opALU = opcodes[4:1];
+						if(opcodes[4:1] == 4'b1010)
+							opALU = 4'b0010;
+						else
+							opALU = opcodes[4:1];
 						if(opcodes[4:1] == 4'b0010)
 							cin = 1'b1;
 						else
