@@ -6,7 +6,8 @@ def obtenerCodigo():
 ##    codigo = hexToBin(linea)
     n = len(linea) // 8
     archivo = open('C:/Users/este0/Desktop/Esteban/TEC/2019 - II Semestre/Taller de Diseno Digital/Pac-ARM/code.dat', 'w')
-    for i in range(32):
+    archivo.write('00000000\n')
+    for i in range(31):
         if (i < n):
             archivo.write(linea[8 * i:8 * (i + 1)] + '\n')
         else:
