@@ -5,14 +5,14 @@ module microprocesadorTOP (input logic clk,
 									output logic [31:0] direc,
 									output logic [31:0] datoOut);
 									
-	logic [31:0] instruccionDirec, instruccion, regDoB, 
+	logic [31:0] instruccionDirec, instruccion, regDoA,  
 		PCWr, regDiWr, operadorB, newPC, PCLR, 
 		jump, BranchAddr, immExt;
 	logic cin, coutALU, zero, selPC, selAddWr, 
 		selOperaB, zeroOut, carryPC4, carryPC8, 
-		carryPCB, logicalOperation, selAddA, selAddB;
+		carryPCB, logicalOperation, selAddB;
 	logic [1:0] selDiWr;
-	logic [3:0] regDirecA, regDirecB, regDirecWr, opALU;
+	logic [3:0] regDirecB, regDirecWr, opALU;
 
 	memoriaInstrucciones memI(
 		.clk(clk),
@@ -22,16 +22,16 @@ module microprocesadorTOP (input logic clk,
 	bancoRegistros regBanco(
 		.clk(clk),
 		.regWr(regWr),
-		.addA(regDirecA),
+		.addA(instruccion[19:16]),
 		.addB(regDirecB),
 		.addWr(regDirecWr),
 		.diWr(regDiWr),
 		.pcWr(PCWr),
-		.doA(datoOut),
-		.doB(regDoB));
+		.doA(regDoA),
+		.doB(datoOut));
 		
 	ALU ALU(
-		.datoA(datoOut), 
+		.datoA(regDoA), 
 		.datoB(operadorB), 
 		.opCode(opALU), 
 		.cin(cin), 
@@ -46,7 +46,6 @@ module microprocesadorTOP (input logic clk,
 		.zero(zeroOut),
 		.selPC(selPC),
 		.regWr(regWr),
-		.selAddA(selAddA),
 		.selAddB(selAddB),
 		.selAddWr(selAddWr), 
 		.opALU(opALU),
@@ -93,15 +92,9 @@ module microprocesadorTOP (input logic clk,
 	   .selDato(selPC),
 	   .datoOutput(newPC));
 		
-	multiplexor2 #(4) MUXA (
-		.datoA(instruccion[19:16]),
-	   .datoB(instruccion[15:12]),
-	   .selDato(selAddA),
-	   .datoOutput(regDirecA));
-		
 	multiplexor2 #(4) MUXB (
 		.datoA(instruccion[3:0]),
-	   .datoB(instruccion[19:16]),
+	   .datoB(instruccion[15:12]),
 	   .selDato(selAddB),
 	   .datoOutput(regDirecB));
 		
@@ -112,7 +105,7 @@ module microprocesadorTOP (input logic clk,
 	   .datoOutput(regDirecWr));
 		
 	multiplexor2 #(32) MUXOperaB (
-		.datoA(regDoB),
+		.datoA(datoOut),
 	   .datoB(immExt),
 	   .selDato(selOperaB),
 	   .datoOutput(operadorB));

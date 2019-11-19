@@ -4,7 +4,6 @@ module unidadControl	(input logic [5:0] opcodes,
 							 input logic zero,
 							 output logic selPC,
 							 output logic regWr,
-							 output logic selAddA, 
 							 output logic selAddB, 
 							 output logic selAddWr, 
 							 output logic [3:0] opALU,
@@ -18,11 +17,10 @@ module unidadControl	(input logic [5:0] opcodes,
 		case(operation)
 			2'b00: begin
 						selPC = 1'b0;
-						if(opcodes[4:1] == 4'b1010)
+						if((opcodes[4:1] == 4'b1010) || (condicion == 4'b0000))
 							regWr = 1'b1;
 						else
 							regWr = 1'b0;
-						selAddA = 1'b0;
 						selAddB = 1'b0;
 						selAddWr = 1'b0;
 						opALU = opcodes[4:1];
@@ -48,13 +46,12 @@ module unidadControl	(input logic [5:0] opcodes,
 						selPC = 1'b0;
 						if(opcodes[0] == 1'b0) begin
 							regWr = 1'b1;
-							memWr = 1'b1;
+							memWr = 1'b0;
 						end
 						else begin
 							regWr = 1'b0;
-							memWr = 1'b0;
+							memWr = 1'b1;
 						end
-						selAddA = 1'b1;
 						selAddB = 1'b1;
 						selAddWr = 1'b0;
 						if(opcodes[3] == 1'b1)
@@ -64,9 +61,9 @@ module unidadControl	(input logic [5:0] opcodes,
 						cin = 1'b0;
 						selDiWr = 2'b10;
 						if(opcodes[5] == 1'b1)
-							selOperaB = 1'b1;
-						else
 							selOperaB = 1'b0;
+						else
+							selOperaB = 1'b1;
 						logicalOperation = 1'b0;
 					 end
 			2'b10: begin
@@ -78,7 +75,6 @@ module unidadControl	(input logic [5:0] opcodes,
 							regWr = 1'b1;
 						else
 							regWr = 1'b0;
-						selAddA = 1'b0;
 						selAddB = 1'b0;
 						selAddWr = 1'b1;
 						opALU = 4'b0000;
@@ -91,7 +87,6 @@ module unidadControl	(input logic [5:0] opcodes,
 			default: begin
 						selPC = 1'b0; 
 						regWr = 1'b1;
-						selAddA = 1'b0;
 						selAddB = 1'b0;
 						selAddWr = 1'b0;
 						opALU = 4'b0000;

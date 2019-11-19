@@ -8,15 +8,10 @@ module PacARMTOP_TB;
 	initial begin
 		
 		clk = 1'b0;
-		#10 clk = 1'b1;
-		#10 clk = 1'b0;
-		#10 clk = 1'b1;
-		#10 clk = 1'b0;
-		#10 clk = 1'b1;
-		#10 clk = 1'b0;
-		#10 clk = 1'b1;
-		#10 clk = 1'b0;
-		#10 clk = 1'b1;
+		repeat(33) begin
+			#10 clk = ~clk;
+			#10 clk = ~clk;
+		end
 		
 	end
 		
