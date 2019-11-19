@@ -1,17 +1,17 @@
 module microprocesadorTOP (input logic clk,
-//									input logic datoIn,
+									output logic [31:0] datoIn,
 									output logic regWr,
 									output logic memWr,
 									output logic [31:0] direc,
 									output logic [31:0] datoOut);
 									
 	logic [31:0] instruccionDirec, instruccion, regDoB, 
-		PCWr, regDiWr, operadorB, datoIn, 
-		newPC, PCLR, jump, BranchAddr, immExt;
+		PCWr, regDiWr, operadorB, memDat_temp, 
+		newPC, PCLR, jump, BranchAddr, immExt, teclado;
 	logic cin, coutALU, zero, selPC, selAddWr, 
 		selOperaB, zeroOut, carryPC4, carryPC8, 
 		carryPCB, logicalOperation, selAddA, selAddB;
-	logic [1:0] selDiWr;
+	logic [1:0] selDiWr, selectChips;
 	logic [3:0] regDirecA, regDirecB, regDirecWr, opALU;
 
 	memoriaInstrucciones memI(
@@ -38,14 +38,20 @@ module microprocesadorTOP (input logic clk,
 		.salida(direc), 
 		.cout(coutALU), 
 		.zero(zero));
+		
+	decoder #(512) deco (
+		.direc(direc),
+		.selectChips(selectChips));
 	
 	memoriaDatos #(512) memD (
 		.clk(clk),
 		.memWr(memWr),
 		.address(direc),
 		.datoIn(datoOut),
-		.datoOut(datoIn));
-		
+		.datoOut(memDat_temp));
+	
+	assign teclado = 32'h0000001c;
+	
 	unidadControl UC(
 		.opcodes(instruccion[25:20]),
 		.operation(instruccion[27:26]),
@@ -141,5 +147,14 @@ module microprocesadorTOP (input logic clk,
 		.datoIn(instruccion[23:0]),
 		.logicalOperation(logicalOperation),
 		.datoExt(jump));
+		
+	always_comb
+	
+		if(selectChips == 2'b01)
+			datoIn = memDat_temp;
+		else if(selectChips == 2'b10)
+			datoIn = teclado;
+		else
+			datoIn = 32'd0;
 
 endmodule

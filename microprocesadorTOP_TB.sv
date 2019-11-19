@@ -1,10 +1,11 @@
 module microprocesadorTOP_TB;
 
 	logic clk, regWr, memWr;
-	logic [31:0] direc, datoOut;
+	logic [31:0] direc, datoOut, datoIn;
 
 	microprocesadorTOP DUT(
 		.clk(clk),
+		.datoIn(datoIn),
 		.regWr(regWr),
 		.memWr(memWr),
 		.direc(direc),
