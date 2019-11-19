@@ -81,7 +81,7 @@ module microprocesadorTOP (input logic clk,
 		
 	sumador32bit sumadorBranch(
 		.datoA(PCWr),
-		.datoB(jump),
+		.datoB({jump[29:0], 2'b00}),
 		.carryIn(1'b0),
 		.resultado(BranchAddr),
 		.carryOut(carryPCB));

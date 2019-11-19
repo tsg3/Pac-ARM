@@ -67,7 +67,9 @@ module unidadControl	(input logic [5:0] opcodes,
 						logicalOperation = 1'b0;
 					 end
 			2'b10: begin
-						if((condicion == 4'b0001 && ~zero) || (condicion == 4'b0000 && zero))
+						if((condicion == 4'b0001 && ~zero) || 
+							(condicion == 4'b0000 && zero) || 
+							(condicion == 4'b1110))
 							selPC = 1'b1;
 						else
 							selPC = 1'b0; 
