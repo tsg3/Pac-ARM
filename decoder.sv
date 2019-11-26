@@ -1,12 +1,14 @@
 module decoder #(parameter size = 32) (input logic [31:0] direc,
-													output logic [1:0] selectChips);
+													output logic [2:0] selectChips);
 
 		always_comb
 			if(direc >= 32'd0 && direc < size)
-				selectChips = 2'b01;
+				selectChips = 3'b011;
 			else if(direc == size)
-				selectChips = 2'b10;
+				selectChips = 3'b101;
+			else if(direc < size + 3)
+				selectChips = 3'b110;
 			else
-				selectChips = 2'b11;
+				selectChips = 3'b111;
 				
 endmodule

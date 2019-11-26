@@ -10,7 +10,7 @@ module microprocesadorTOP (input logic clk,
 		jump, BranchAddr, immExt;
 	logic cin, coutALU, zero, selPC, selAddWr, 
 		selOperaB, zeroOut, carryPC4, carryPC8, 
-		carryPCB, logicalOperation, selAddB;
+		carryPCB, logicalOperation, selAddB, negative, negativeOut;
 	logic [1:0] selDiWr;
 	logic [3:0] regDirecB, regDirecWr, opALU;
 
@@ -37,13 +37,15 @@ module microprocesadorTOP (input logic clk,
 		.cin(cin), 
 		.salida(direc), 
 		.cout(coutALU), 
-		.zero(zero));
+		.zero(zero),
+		.negative(negative));
 	
 	unidadControl UC(
 		.opcodes(instruccion[25:20]),
 		.operation(instruccion[27:26]),
 		.condicion(instruccion[31:28]),
 		.zero(zeroOut),
+		.negative(negativeOut),
 		.selPC(selPC),
 		.regWr(regWr),
 		.selAddB(selAddB),
@@ -57,8 +59,10 @@ module microprocesadorTOP (input logic clk,
 		
 	flagsCPSR CPSR(
 		.zeroIn(zero),
+		.negativeIn(negative),
 		.clk(clk),
-		.zeroOut(zeroOut));
+		.zeroOut(zeroOut),
+		.negativeOut(negativeOut));
 		
 	registroPC PC(
 		.inputPC(newPC),

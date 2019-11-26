@@ -5,7 +5,7 @@ module extension #(parameter BITS = 16) (input logic [BITS - 1:0] datoIn,
 	int i;
 	
 	always_comb begin
-		if(~logicalOperation)
+		if(~logicalOperation && BITS != 8)
 			datoExt = 32'(signed'(datoIn));
 		else
 			datoExt = datoIn;

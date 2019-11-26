@@ -1,3 +1,5 @@
+`timescale 1 ps / 1 ps
+
 module PacARMTOP_TB;
 
 	logic clk;
@@ -8,7 +10,7 @@ module PacARMTOP_TB;
 	initial begin
 		
 		clk = 1'b0;
-		repeat(33) begin
+		repeat(5000) begin
 			#10 clk = ~clk;
 			#10 clk = ~clk;
 		end

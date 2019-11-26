@@ -4,7 +4,8 @@ module ALU(input logic [31:0] datoA,
 			  input logic cin,
 			  output logic [31:0] salida,
 			  output logic cout,
-			  output logic zero);
+			  output logic zero, 
+			  output logic negative);
 
 	//Suma
 	logic [31:0] resSuma;
@@ -57,6 +58,9 @@ module ALU(input logic [31:0] datoA,
 	
 		if(salidaMUX == 32'd0) zero = 1'b1;
 		else zero = 1'b0;
+		
+		if(salidaMUX[31] == 1'b1) negative = 1'b1;
+		else negative = 1'b0;
 		
 	end
 		  

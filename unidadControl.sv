@@ -2,6 +2,7 @@ module unidadControl	(input logic [5:0] opcodes,
 							 input logic [1:0] operation,
 							 input logic [3:0] condicion,
 							 input logic zero,
+							 input logic negative,
 							 output logic selPC,
 							 output logic regWr,
 							 output logic selAddB, 
@@ -72,6 +73,8 @@ module unidadControl	(input logic [5:0] opcodes,
 			2'b10: begin
 						if((condicion == 4'b0001 && ~zero) || 
 							(condicion == 4'b0000 && zero) || 
+							(condicion == 4'b0101 && ~negative) || 
+							(condicion == 4'b0100 && negative) || 
 							(condicion == 4'b1110))
 							selPC = 1'b1;
 						else

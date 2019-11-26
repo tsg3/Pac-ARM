@@ -7,7 +7,7 @@ def obtenerCodigo():
     n = len(linea) // 8
     archivo = open('C:/Users/este0/Desktop/Esteban/TEC/2019 - II Semestre/Taller de Diseno Digital/Pac-ARM/code.dat', 'w')
     archivo.write('00000000\n')
-    for i in range(31):
+    for i in range(127):
         if (i < n):
             archivo.write(linea[8 * i:8 * (i + 1)] + '\n')
         else:

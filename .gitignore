@@ -1,6 +1,7 @@
 *.rpt
 greybox_tmp
 incremental_db
+.qsys_edit
 simulation
 output_files
 *.bak
@@ -18,3 +19,4 @@ db
 *.tbd
 *.sof
 *.tcl
+c5_pin_model_dump.txt
